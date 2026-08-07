@@ -6,7 +6,7 @@
 # NOTE: git-annex runs this command with piped stdio, so interactive input
 # must read from /dev/tty, otherwise it blocks forever.
 # Token cached in /tmp (1h, keyed by username) to avoid one login per file.
-API_BASE="https://registeredpreventad-new.loris.ca//api/v0.0.3"
+API_BASE="https://registeredpreventad-new.loris.ca/api/v0.0.3"
 
 USERNAME="${LORIS_USERNAME:-}"
 if [ -z "$USERNAME" ]; then
@@ -27,8 +27,7 @@ if [ -z "$PASSWORD" ]; then
         stty -echo < /dev/tty 2>/dev/null
         read -r PASSWORD < /dev/tty
         stty echo < /dev/tty 2>/dev/null
-        printf '
-' >/dev/tty 2>/dev/null
+        printf '\n' >/dev/tty 2>/dev/null
     else
         read -r PASSWORD
     fi
@@ -47,14 +46,11 @@ try:
     resp = urllib.request.urlopen(req, timeout=30)
     print(json.load(resp).get("token") or "")
 except urllib.error.HTTPError as e:
-    sys.stderr.write("loris-auth.sh: login HTTP %d %s (check username/password)
-" % (e.code, e.reason))
+    sys.stderr.write("loris-auth.sh: login HTTP %d %s (check username/password)\n" % (e.code, e.reason))
 except Exception as e:
-    sys.stderr.write("loris-auth.sh: login error: %s
-" % e)
+    sys.stderr.write("loris-auth.sh: login error: %s\n" % e)
 ')
 if [ -z "$TOKEN" ]; then
     exit 1
 fi
-printf 'Authorization: Bearer %s
-' "$TOKEN" | tee "$CACHE"
+printf 'Authorization: Bearer %s\n' "$TOKEN" | tee "$CACHE"
