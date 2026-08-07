@@ -4,7 +4,8 @@ cd registeredpreventad-new-api-v3
 
 git config annex.http-headers-command "$(pwd)/tools/loris-auth.sh"   # must have
 
-export LORIS_USERNAME=username                                       # access
-export LORIS_PASSWORD=password
+export LORIS_USERNAME=username                                       # access username
+
+export LORIS_PASSWORD=password                                       # access password 
 
 datalad get .
